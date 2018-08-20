@@ -13,7 +13,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Service
-@Transactional(readOnly = true)
+@Transactional
 public class CarServiceImpl implements CarService {
 
     @Autowired
@@ -27,7 +27,9 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public void deleteCar(CarTO carTO) {
-        carRepository.delete(CarMapper.toCarEntity(carTO));
+
+
+        carRepository.delete(carTO.getId());
     }
 
     @Override

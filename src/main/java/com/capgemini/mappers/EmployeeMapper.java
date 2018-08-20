@@ -24,6 +24,7 @@ public class EmployeeMapper {
                 .withEmail(employeeEntity.getEmail())
                 .withPhone(employeeEntity.getPhone())
                 .withCars(carTOs)
+                .withId(employeeEntity.getId())
                 .build();
 
     }
@@ -38,6 +39,7 @@ public class EmployeeMapper {
         employeeEntity.setAddress(employeeTO.getAddress());
         employeeEntity.setEmail(employeeTO.getEmail());
         employeeEntity.setPhone(employeeTO.getPhone());
+        employeeEntity.setId(employeeTO.getId());
 
         Collection<CarEntity> cars = CarMapper.map2Entities(employeeTO.getCars());
 

@@ -5,6 +5,7 @@ import org.springframework.util.CollectionUtils;;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 
 public class CustomerTO {
 
@@ -84,7 +85,7 @@ public class CustomerTO {
         private int phone;
         private long creditCard;
 
-        private Collection<RentalTO> rentals;
+        private Collection<RentalTO> rentals = new HashSet<>();
 
         private int id;
 

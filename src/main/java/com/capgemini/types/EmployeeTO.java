@@ -6,6 +6,7 @@ import org.springframework.util.CollectionUtils;
 import javax.persistence.Column;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 
 public class EmployeeTO {
 
@@ -90,7 +91,7 @@ public class EmployeeTO {
         private String email;
         private int phone;
 
-        private Collection<CarTO> cars;
+        private Collection<CarTO> cars = new HashSet<>();
 
         private long id;
 
@@ -144,11 +145,11 @@ public class EmployeeTO {
         }
 
         public EmployeeTO build() {
-            checkBeforeBuild(name, surname, birth, address, email, phone, cars);
+            checkBeforeBuild(name, surname, birth, address, email, phone);
             return new EmployeeTO(name, surname, birth, address, email, phone, cars, id);
         }
 
-        private void checkBeforeBuild(String name, String surname, Date birth, String address, String email, int phone, Collection<CarTO> cars) {
+        private void checkBeforeBuild(String name, String surname, Date birth, String address, String email, int phone) {
             if (name == null || surname == null || birth == null || address == null || email == null || phone == 0 ) {
                 throw new RuntimeException("Incorrect employee to be created");
             }

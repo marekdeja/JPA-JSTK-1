@@ -9,7 +9,9 @@ import com.capgemini.types.EmployeeTO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -47,7 +49,7 @@ public class CarServiceTest {
         long elements = carDao.count();
 
         //then
-        assertEquals(elements, 1);
+        assertEquals(1, elements);
     }
 
     @Test
@@ -84,17 +86,17 @@ public class CarServiceTest {
                 .withEngine(1.4f)
                 .build();
         // when
-        carService.saveCar(car1);
-        carService.saveCar(car2);
-        carService.saveCar(car3);
+       CarTO car1To = carService.saveCar(car1);
+        CarTO car2To = carService.saveCar(car2);
+        CarTO car3To = carService.saveCar(car3);
 
-        carService.deleteCar(car1);
+        carService.deleteCar(car1To);
 
         long elements = carDao.count();
 
         //then
         System.out.println(elements);
-        assertEquals(elements, 2);
+        assertEquals(2, elements);
     }
 
     @Test
@@ -112,13 +114,13 @@ public class CarServiceTest {
                 .build();
 
         // when
-        carService.saveCar(car1);
-        car1.setColor("black");
-        carService.changeData(car1);
+        CarTO car1TO = carService.saveCar(car1);
+        car1TO.setColor("black");
+        carService.changeData(car1TO);
 
         //then
         CarEntity carTest = carDao.getOne(1L);
-        assertEquals(carTest.getColor(), "black" );
+        assertEquals("black", carTest.getColor() );
 
     }
 

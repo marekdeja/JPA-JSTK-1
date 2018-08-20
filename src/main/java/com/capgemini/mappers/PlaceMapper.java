@@ -25,6 +25,7 @@ public class PlaceMapper {
                 .withEmployees(employeeTOs)
                 .withRentalStart(rentalStartTOs)
                 .withRentalEnd(rentalEndTOs)
+                .withId(placeEntity.getId())
                 .build();
     }
 
@@ -35,6 +36,7 @@ public class PlaceMapper {
         PlaceEntity placeEntity = new PlaceEntity();
         placeEntity.setAddress(placeTO.getAddress());
         placeEntity.setPhone(placeTO.getPhone());
+        placeEntity.setId(placeTO.getId());
 
         Collection<EmployeeEntity> employees = EmployeeMapper.map2Entities(placeTO.getEmployees());
         Collection<RentalEntity> rentalStartEntities = RentalMapper.map2Entities(placeTO.getRentalStart());

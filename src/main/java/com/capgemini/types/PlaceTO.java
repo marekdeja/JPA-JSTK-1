@@ -5,6 +5,7 @@ import org.springframework.util.CollectionUtils;
 
 import javax.persistence.Column;
 import java.util.Collection;
+import java.util.HashSet;
 
 public class PlaceTO {
 
@@ -62,6 +63,30 @@ public class PlaceTO {
         return id;
     }
 
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setPhone(int phone) {
+        this.phone = phone;
+    }
+
+    public void setEmployees(Collection<EmployeeTO> employees) {
+        this.employees = employees;
+    }
+
+    public void setRentalStart(Collection<RentalTO> rentalStart) {
+        this.rentalStart = rentalStart;
+    }
+
+    public void setRentalEnd(Collection<RentalTO> rentalEnd) {
+        this.rentalEnd = rentalEnd;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public static PlaceTOBuilder builder() {
         return new PlaceTOBuilder();
     }
@@ -71,9 +96,9 @@ public class PlaceTO {
         private String address;
         private int phone;
 
-        private Collection<EmployeeTO> employees;
-        private Collection<RentalTO> rentalStart;
-        private Collection<RentalTO> rentalEnd;
+        private Collection<EmployeeTO> employees = new HashSet<>();
+        private Collection<RentalTO> rentalStart = new HashSet<>();
+        private Collection<RentalTO> rentalEnd = new HashSet<>();
 
         private Long id;
 
@@ -116,12 +141,12 @@ public class PlaceTO {
             return this;
         }
         public PlaceTO build( ){
-            checkBeforeBuild(address,  phone, employees,  rentalStart, rentalEnd);
+            checkBeforeBuild(address,  phone);
             return new PlaceTO(address,  phone, employees,  rentalStart, rentalEnd, id);
         }
 
-        private void checkBeforeBuild(String address, int phone, Collection<EmployeeTO> employees, Collection<RentalTO> rentalStart, Collection<RentalTO> rentalEnd){
-            if (CollectionUtils.isEmpty(employees)||CollectionUtils.isEmpty(rentalStart)||CollectionUtils.isEmpty(rentalEnd)||address==null||phone==0){
+        private void checkBeforeBuild(String address, int phone){
+            if (address==null||phone==0){
                 throw new RuntimeException("Incorrect place to be created");
             }
         }

@@ -8,6 +8,7 @@ import com.capgemini.types.EmployeeTO;
 import com.capgemini.types.RentalTO;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,6 +16,7 @@ public class CarMapper {
     public static CarTO toCarTO (CarEntity carEntity) {
         if (carEntity == null)
             return null;
+
 
         Collection<RentalTO> rentalTOs = RentalMapper.map2TOs(carEntity.getRentals());
         Collection<EmployeeTO> employeeTOs = EmployeeMapper.map2TOs(carEntity.getEmployees());
@@ -29,6 +31,7 @@ public class CarMapper {
                 .withEngine(carEntity.getEngine())
                 .withRentals(rentalTOs)
                 .withEmployees(employeeTOs)
+                .withId(carEntity.getId())
                 .build();
 
     }
@@ -44,6 +47,7 @@ public class CarMapper {
         carEntity.setColor(carTO.getColor());
         carEntity.setPower(carTO.getPower());
         carEntity.setMileage(carTO.getMileage());
+        carEntity.setId(carTO.getId());
 
         Collection<RentalEntity> rentals = RentalMapper.map2Entities(carTO.getRentals());
         Collection<EmployeeEntity> employees = EmployeeMapper.map2Entities(carTO.getEmployees());
@@ -54,10 +58,16 @@ public class CarMapper {
         return carEntity;
     }
     public static Collection<CarTO> map2TOs (Collection<CarEntity> carEntities){
+        if (carEntities==null){
+            return new HashSet<>();
+        }
         return carEntities.stream().map(CarMapper::toCarTO).collect(Collectors.toList());
     }
 
     public static Collection<CarEntity> map2Entities (Collection<CarTO> carTOs){
+        if (carTOs==null){
+            return new HashSet<>();
+        }
         return carTOs.stream().map(CarMapper::toCarEntity).collect(Collectors.toList());
     }
 }
